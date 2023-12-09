@@ -15,13 +15,13 @@ public class BackEndWindow extends MainWindow {
         connect.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                api.Connect();
+                api.connect();
             }
         });
         disconnect.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                api.Disconect();
+                api.disconect();
             }
         });
 
@@ -39,7 +39,7 @@ public class BackEndWindow extends MainWindow {
         GET.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                api.request();
+                //System.out.println(api.GET());
             }
         });
     }

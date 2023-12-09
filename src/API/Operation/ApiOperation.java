@@ -1,34 +1,34 @@
 package API.Operation;
 
 import API.MySql.MySqlConnection;
-import com.mysql.cj.xdevapi.JsonArray;
 
 import java.io.FileWriter;
 import java.io.PrintWriter;
 import java.sql.*;
-import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 import java.util.Scanner;
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
-public class ApiOperation extends MySqlConnection {
+public class ApiOperation extends MySqlConnection  {
 
-    public static ApiOperation instance = new ApiOperation();
+    Connection connection = null;
 
-    @Override
+
+
+    public ApiOperation(Connection connect){
+        super();
+        connection = connect;
+    }
+     @Override
     public void request() {
         System.out.print("Введите запрос: \n");
         Scanner in = new Scanner(System.in);
         RequestHandler(in.next());
     }
 
+    @Override
     public void RequestHandler(String request){
         if (Objects.equals(request, "GET")){
             GET();
@@ -45,10 +45,10 @@ public class ApiOperation extends MySqlConnection {
 
         }
 
-    }
+    }}
 
-    @Override
-    public void GET() {
+/*    @Override
+    public String GET() {
         String sqlQuery = "SELECT * FROM test1";
         try (PreparedStatement s = connection.prepareStatement(sqlQuery)) {
             try (ResultSet resultSet = s.executeQuery()){
@@ -71,11 +71,12 @@ public class ApiOperation extends MySqlConnection {
                 }catch (Exception e){
                     e.printStackTrace();
                 }
-
+                System.out.print(jsonObject.toString(4));
+                jsonObject.toString(4);
             }
         }
         catch (Exception e){
             e.printStackTrace();
         }
     }
-}
+}*/

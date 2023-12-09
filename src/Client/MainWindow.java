@@ -16,7 +16,7 @@ public abstract class MainWindow extends JFrame{
     protected static JButton PUT = new JButton("PUT");
     protected static JButton GET = new JButton("GET");
     protected static JPanel panel;
-    //private BackEndWindow backEndWindow = new BackEndWindow();
+    protected static BackEndWindow backEndWindow = new BackEndWindow();
     protected static GridBagConstraints gbc;
 
     static class Window extends JFrame {
@@ -46,16 +46,8 @@ public abstract class MainWindow extends JFrame{
             panel.add(GET, gbc);
 
             getContentPane().add(panel);
-            api = new ApiOperation();
             System.out.print("test");
 
-
-        /*backEndWindow.setConnectPosition();
-        add(connect, gbc);
-        backEndWindow.setDisconectPosition();
-        add(disconnect, gbc);
-
-        backEndWindow.setWindow();*/
         }
 
         public static void main(String[] args) throws SQLException {
