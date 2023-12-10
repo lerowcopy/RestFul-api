@@ -19,14 +19,33 @@ public class GreetClient {
 
                 in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 
+                DataInputStream dis = new DataInputStream(clientSocket.getInputStream());
+
                 out = new PrintWriter(clientSocket.getOutputStream(), true);
                 while (clientSocket.isConnected()){
-                    System.out.println("Введите запрос:");
+                    System.out.println("Enter a request:");
                     String word = reader.readLine();
                     out.write(word + "\n");
                     out.flush();
+
+                    if (word.equals("GET")){
+                        long fileSize = dis.readLong();
+                        if (fileSize != -1){
+                            try (FileOutputStream fos = new FileOutputStream("C:\\Users\\79531\\IdeaProjects\\RESTFULL api\\SAVE\\test.json")){
+                                byte[] buffer = new byte[4096];
+                                int bytesRead = dis.read(buffer);
+                                fos.write(buffer, 0, bytesRead);
+                                System.out.println("File received from server.");
+                            }
+                        }
+                        else {
+                            System.out.println("File does not exist on the server.");
+                        }
+                    }
+                }
+
                     /*String serverWord = in.readLine();
-                    System.out.println(serverWord);*/
+                    System.out.println(serverWord);*//*
                     char[] buffer = new char[4096];
                     int bytesRead;
 
@@ -34,10 +53,7 @@ public class GreetClient {
                         String data = new String(buffer, 0, bytesRead);
                         System.out.println("Received from server: " + data);
                     }
-                    out.flush();
-
-                }
-
+                    out.flush();*/
             }finally {
                 clientSocket.close();
             }

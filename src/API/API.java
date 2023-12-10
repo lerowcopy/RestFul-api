@@ -1,39 +1,33 @@
-package API.MySql;
+package API;
 
-import API.Operation.ApiOperation;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.io.FileWriter;
 import java.io.PrintWriter;
 import java.sql.*;
-import java.util.Objects;
 
-public class MySqlConnection {
+public class API {
 
     private String url;
     private String username;
     private String password;
     protected Connection connection = null;
-    public ApiOperation api = null;
     public Boolean connected = false;
     public void request(){}
 
-    public MySqlConnection(){
+    public API(){
         url = "jdbc:mysql://sql11.freesqldatabase.com/sql11668720";
         username = "sql11668720";
         password = "feHTsGVF8d";
     }
 
-    public void RequestHandler(String request){
-        if (Objects.equals(request, "GET")){
-            GET();
-            System.out.print("GET запрос выполнен");
-        }
+    public File PUT() {
+
+        return null;
     }
-    public void PUT() throws SQLException {}
     public String GET(){
-        System.out.print("work");
         String sqlQuery = "SELECT * FROM test1";
         try (PreparedStatement s = connection.prepareStatement(sqlQuery)) {
             try (ResultSet resultSet = s.executeQuery()){
@@ -69,12 +63,12 @@ public class MySqlConnection {
 
             Class.forName("com.mysql.cj.jdbc.Driver");
             connection = DriverManager.getConnection(url, username, password);
-            System.out.println("Подключение к MySQL успешно!");
+            System.out.println("Connection to MySQL is successful!");
             connected = true;
 
         } catch (ClassNotFoundException e){
 
-            System.err.println("JDBC драйвер не найден");
+            System.err.println("JDBC driver not found");
             e.printStackTrace();
 
         } catch (SQLException e) {
