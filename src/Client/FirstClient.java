@@ -31,8 +31,8 @@ public class FirstClient {
                     if (word.equals("GET")){
                         GETClient(dis);
                     }
-                    else if (word.equals("PUT")){
-                        PUTClient(dos);
+                    else if (word.equals("POST")){
+                        POSTClient(dos);
                     }
                 }
             }finally {
@@ -58,7 +58,7 @@ public class FirstClient {
         }
     }
 
-    public static void PUTClient(DataOutputStream dos) throws IOException{
+    public static void POSTClient(DataOutputStream dos) throws IOException{
         File file = new File("C:\\Users\\79531\\IdeaProjects\\RESTFULL api\\Client\\put.json");
         dos.writeLong(file.length());
 

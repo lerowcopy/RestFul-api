@@ -66,9 +66,9 @@ class ClientHandler implements Runnable {
                 if (inputLine.equals("GET")){
                     GETServer(dos);
                 }
-                else if (inputLine.equals("PUT")) {
+                else if (inputLine.equals("POST")) {
 
-                    PUTServer(dis);
+                    POSTServer(dis);
                 }
 
             }
@@ -104,7 +104,7 @@ class ClientHandler implements Runnable {
         }
     }
 
-    public void PUTServer (DataInputStream dis) throws IOException{
+    public void POSTServer (DataInputStream dis) throws IOException{
         long fileSize = dis.readLong();
         if (fileSize != -1){
             try (FileOutputStream fos = new FileOutputStream("C:\\Users\\79531\\IdeaProjects\\RESTFULL api\\Server\\put.json")){
