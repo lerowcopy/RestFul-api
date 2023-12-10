@@ -1,10 +1,9 @@
 package Client;
 
 import java.io.*;
-import java.net.ServerSocket;
 import java.net.*;
 
-public class GreetClient {
+public class FirstClient {
     private static Socket clientSocket;
     private static PrintWriter out;
     private static BufferedReader in;
@@ -19,6 +18,7 @@ public class GreetClient {
 
                 in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 
+                DataOutputStream dos = new DataOutputStream(clientSocket.getOutputStream());
                 DataInputStream dis = new DataInputStream(clientSocket.getInputStream());
 
                 out = new PrintWriter(clientSocket.getOutputStream(), true);
@@ -31,7 +31,7 @@ public class GreetClient {
                     if (word.equals("GET")){
                         long fileSize = dis.readLong();
                         if (fileSize != -1){
-                            try (FileOutputStream fos = new FileOutputStream("C:\\Users\\79531\\IdeaProjects\\RESTFULL api\\SAVE\\test.json")){
+                            try (FileOutputStream fos = new FileOutputStream("C:\\Users\\79531\\IdeaProjects\\RESTFULL api\\Client\\test.json")){
                                 byte[] buffer = new byte[4096];
                                 int bytesRead = dis.read(buffer);
                                 fos.write(buffer, 0, bytesRead);
@@ -40,6 +40,20 @@ public class GreetClient {
                         }
                         else {
                             System.out.println("File does not exist on the server.");
+                        }
+                    }
+                    else if (word.equals("PUT")){
+                        File file = new File("C:\\Users\\79531\\IdeaProjects\\RESTFULL api\\Client\\put.json");
+                        dos.writeLong(file.length());
+
+                        try (FileInputStream fis = new FileInputStream(file)){
+                            byte[] buffer = new byte[4096];
+                            int bytesRead;
+
+                            while ((bytesRead = fis.read(buffer)) != -1){
+                                dos.write(buffer, 0, bytesRead);
+                            }
+                            System.out.println("File sent to server");
                         }
                     }
                 }

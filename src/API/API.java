@@ -1,5 +1,6 @@
 package API;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -23,12 +24,19 @@ public class API {
         password = "feHTsGVF8d";
     }
 
-    public File PUT() {
+    public void PUT(JsonNode jsonNode) {
+        String sqlQuery = "INSERT INTO myDataBase (name) VALUES (?)";
 
-        return null;
+        try (PreparedStatement s = connection.prepareStatement(sqlQuery)){
+            s.setString(1, jsonNode.get("name").get("title").asText());
+            s.executeUpdate();
+            System.out.println("Data inserted into the database.");
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
     }
     public String GET(){
-        String sqlQuery = "SELECT * FROM test1";
+        String sqlQuery = "SELECT * FROM myDataBase";
         try (PreparedStatement s = connection.prepareStatement(sqlQuery)) {
             try (ResultSet resultSet = s.executeQuery()){
                 JSONArray jsonArray = new JSONArray();
@@ -44,11 +52,6 @@ public class API {
                 jsonObject.put("table", jsonArray);
                 JSONObject json = new JSONObject();
                 json.put("tableList", jsonObject);
-                try (PrintWriter out = new PrintWriter(new FileWriter("C:\\Users\\79531\\IdeaProjects\\RESTFULL api\\JSON\\test.json"))){
-                    out.write(jsonObject.toString(4));
-                }catch (Exception e){
-                    e.printStackTrace();
-                }
                 return jsonObject.toString(4);
             }
         }
