@@ -45,7 +45,7 @@ public class MultiThreadedServer {
 }
 
 class ClientHandler implements Runnable {
-    private Socket clientSocket;
+    private final Socket clientSocket;
 
     public ClientHandler(Socket clientSocket) {
         this.clientSocket = clientSocket;

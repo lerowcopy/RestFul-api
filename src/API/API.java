@@ -4,19 +4,15 @@ import com.fasterxml.jackson.databind.JsonNode;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.PrintWriter;
 import java.sql.*;
 
 public class API {
 
-    private String url;
-    private String username;
-    private String password;
+    private final String url;
+    private final String username;
+    private final String password;
     protected Connection connection = null;
     public Boolean connected = false;
-    public void request(){}
 
     public API(){
         url = "jdbc:mysql://sql11.freesqldatabase.com/sql11668720";
