@@ -29,32 +29,10 @@ public class FirstClient {
                     out.flush();
 
                     if (word.equals("GET")){
-                        long fileSize = dis.readLong();
-                        if (fileSize != -1){
-                            try (FileOutputStream fos = new FileOutputStream("C:\\Users\\79531\\IdeaProjects\\RESTFULL api\\Client\\test.json")){
-                                byte[] buffer = new byte[4096];
-                                int bytesRead = dis.read(buffer);
-                                fos.write(buffer, 0, bytesRead);
-                                System.out.println("File received from server.");
-                            }
-                        }
-                        else {
-                            System.out.println("File does not exist on the server.");
-                        }
+                        GETClient(dis);
                     }
                     else if (word.equals("PUT")){
-                        File file = new File("C:\\Users\\79531\\IdeaProjects\\RESTFULL api\\Client\\put.json");
-                        dos.writeLong(file.length());
-
-                        try (FileInputStream fis = new FileInputStream(file)){
-                            byte[] buffer = new byte[4096];
-                            int bytesRead;
-
-                            while ((bytesRead = fis.read(buffer)) != -1){
-                                dos.write(buffer, 0, bytesRead);
-                            }
-                            System.out.println("File sent to server");
-                        }
+                        PUTClient(dos);
                     }
                 }
             }finally {
@@ -62,6 +40,36 @@ public class FirstClient {
             }
         }catch (IOException e){
             e.printStackTrace();
+        }
+    }
+
+    public static void GETClient(DataInputStream dis) throws IOException {
+        long fileSize = dis.readLong();
+        if (fileSize != -1){
+            try (FileOutputStream fos = new FileOutputStream("C:\\Users\\79531\\IdeaProjects\\RESTFULL api\\Client\\test.json")){
+                byte[] buffer = new byte[4096];
+                int bytesRead = dis.read(buffer);
+                fos.write(buffer, 0, bytesRead);
+                System.out.println("File received from server.");
+            }
+        }
+        else {
+            System.out.println("File does not exist on the server.");
+        }
+    }
+
+    public static void PUTClient(DataOutputStream dos) throws IOException{
+        File file = new File("C:\\Users\\79531\\IdeaProjects\\RESTFULL api\\Client\\put.json");
+        dos.writeLong(file.length());
+
+        try (FileInputStream fis = new FileInputStream(file)){
+            byte[] buffer = new byte[4096];
+            int bytesRead;
+
+            while ((bytesRead = fis.read(buffer)) != -1){
+                dos.write(buffer, 0, bytesRead);
+            }
+            System.out.println("File sent to server");
         }
     }
 
