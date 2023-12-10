@@ -57,17 +57,6 @@ public class FirstClient {
                         }
                     }
                 }
-
-                    /*String serverWord = in.readLine();
-                    System.out.println(serverWord);*//*
-                    char[] buffer = new char[4096];
-                    int bytesRead;
-
-                    while ((bytesRead = in.read(buffer)) != -1){
-                        String data = new String(buffer, 0, bytesRead);
-                        System.out.println("Received from server: " + data);
-                    }
-                    out.flush();*/
             }finally {
                 clientSocket.close();
             }

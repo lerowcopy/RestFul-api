@@ -85,7 +85,7 @@ public class API {
         if (connection != null){
             try{
                 connection.close();
-                System.out.println("Отключение от MySQL успешно!");
+                System.out.println("Disconnect from MySQL is successful!");
             }catch (SQLException e){
                 e.printStackTrace();
             }
