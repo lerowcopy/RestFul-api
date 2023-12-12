@@ -3,7 +3,7 @@ package Client;
 import java.io.*;
 import java.net.*;
 
-public class FirstClient {
+public class secondClient {
     private static Socket clientSocket;
 
     public static void main(String[] args){

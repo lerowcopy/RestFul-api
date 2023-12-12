@@ -28,6 +28,36 @@ public class API {
             s.executeUpdate();
             System.out.println("Data inserted into the database.");
         }catch (SQLException e){
+            sqlQuery = "ALTER TABLE myDataBase DROP `id`;";
+            String sql = "ALTER TABLE myDataBase ADD `id` INT(11) NOT NULL AUTO_INCREMENT FIRST, ADD PRIMARY KEY (`id`);";
+            try (PreparedStatement st = connection.prepareStatement(sqlQuery); PreparedStatement sta = connection.prepareStatement(sql)){
+                st.executeUpdate();
+                sta.executeUpdate();
+            }catch (SQLException r){
+                r.printStackTrace();
+            }
+            e.printStackTrace();
+
+        }
+    }
+
+    public void DELETE(JsonNode jsonNode) {
+        String sqlQuery = "DELETE FROM myDataBase WHERE id = (?)";
+
+        try (PreparedStatement s = connection.prepareStatement(sqlQuery)){
+            int deletedId = jsonNode.get("id").asInt();
+            s.setInt(1, deletedId);
+            s.executeUpdate();
+            System.out.println("Data deleted into the database.");
+            sqlQuery = "ALTER TABLE myDataBase DROP `id`;";
+            String sql = "ALTER TABLE myDataBase ADD `id` INT(11) NOT NULL AUTO_INCREMENT FIRST, ADD PRIMARY KEY (`id`);";
+            try (PreparedStatement st = connection.prepareStatement(sqlQuery); PreparedStatement sta = connection.prepareStatement(sql)){
+                st.executeUpdate();
+                sta.executeUpdate();
+            }catch (SQLException r){
+                r.printStackTrace();
+            }
+        }catch (SQLException e){
             e.printStackTrace();
         }
     }
@@ -41,6 +71,14 @@ public class API {
             s.executeUpdate();
             System.out.println("Data updated in the database.");
         }catch (SQLException e){
+            sqlQuery = "ALTER TABLE myDataBase DROP `id`;";
+            String sql = "ALTER TABLE myDataBase ADD `id` INT(11) NOT NULL AUTO_INCREMENT FIRST, ADD PRIMARY KEY (`id`);";
+            try (PreparedStatement st = connection.prepareStatement(sqlQuery); PreparedStatement sta = connection.prepareStatement(sql)){
+                st.executeUpdate();
+                sta.executeUpdate();
+            }catch (SQLException r){
+                r.printStackTrace();
+            }
             e.printStackTrace();
         }
     }

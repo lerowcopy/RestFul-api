@@ -1,5 +1,4 @@
 {
-    "name": {
-        "title": "Misha"
-    }
+    "id" : 1,
+    "name" : "Favorite"
 }

@@ -63,15 +63,11 @@ class ClientHandler implements Runnable {
             String inputLine;
             while ((inputLine = in.readLine()) != null) {
                 System.out.println("Received from " + clientSocket.getInetAddress() + ": " + inputLine);
-                if (inputLine.equals("GET")){
-                    GETServer(dos);
-                }
-                else if (inputLine.equals("POST")) {
-
-                    POSTServer(dis);
-                }
-                else if (inputLine.equals("PUT")){
-                    PUTServer(dis);
+                switch (inputLine) {
+                    case "GET" -> GETServer(dos);
+                    case "POST" -> POSTServer(dis);
+                    case "PUT" -> PUTServer(dis);
+                    case "DELETE" -> DELETEServer(dis);
                 }
 
             }
@@ -87,13 +83,13 @@ class ClientHandler implements Runnable {
     }
 
     public void GETServer(DataOutputStream dos) throws IOException{
-        try (PrintWriter out = new PrintWriter(new FileWriter("C:\\Users\\79531\\IdeaProjects\\RESTFULL api\\Server\\test.json"))){
+        try (PrintWriter out = new PrintWriter(new FileWriter("C:\\Users\\79531\\IdeaProjects\\RESTFULL api\\Server\\get.json"))){
             out.write(api.GET());
         }catch (Exception e){
             e.printStackTrace();
         }
 
-        File file = new File("C:\\Users\\79531\\IdeaProjects\\RESTFULL api\\Server\\test.json");
+        File file = new File("C:\\Users\\79531\\IdeaProjects\\RESTFULL api\\Server\\get.json");
         dos.writeLong(file.length());
 
         try (FileInputStream fis = new FileInputStream(file)){
@@ -110,14 +106,14 @@ class ClientHandler implements Runnable {
     public void POSTServer (DataInputStream dis) throws IOException{
         long fileSize = dis.readLong();
         if (fileSize != -1){
-            try (FileOutputStream fos = new FileOutputStream("C:\\Users\\79531\\IdeaProjects\\RESTFULL api\\Server\\put.json")){
+            try (FileOutputStream fos = new FileOutputStream("C:\\Users\\79531\\IdeaProjects\\RESTFULL api\\Server\\post.json")){
                 byte[] buffer = new byte[4096];
                 int bytesRead = dis.read(buffer);
                 fos.write(buffer, 0, bytesRead);
                 System.out.println("File received from client.");
 
                 try{
-                    File file = new File("C:\\Users\\79531\\IdeaProjects\\RESTFULL api\\Server\\put.json");
+                    File file = new File("C:\\Users\\79531\\IdeaProjects\\RESTFULL api\\Server\\post.json");
 
                     JsonNode jsonNode = objectMapper.readTree(file);
 
@@ -133,18 +129,41 @@ class ClientHandler implements Runnable {
     public void PUTServer (DataInputStream dis) throws IOException{
         long fileSize = dis.readLong();
         if (fileSize != -1){
-            try (FileOutputStream fos = new FileOutputStream("C:\\Users\\79531\\IdeaProjects\\RESTFULL api\\Server\\post.json")){
+            try (FileOutputStream fos = new FileOutputStream("C:\\Users\\79531\\IdeaProjects\\RESTFULL api\\Server\\put.json")){
                 byte[] buffer = new byte[4096];
                 int bytesRead = dis.read(buffer);
                 fos.write(buffer, 0, bytesRead);
                 System.out.println("File received from client.");
 
                 try{
-                    File file = new File("C:\\Users\\79531\\IdeaProjects\\RESTFULL api\\Server\\post.json");
+                    File file = new File("C:\\Users\\79531\\IdeaProjects\\RESTFULL api\\Server\\put.json");
 
                     JsonNode jsonNode = objectMapper.readTree(file);
 
                     api.PUT(jsonNode);
+
+                }catch (IOException e){
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    public void DELETEServer (DataInputStream dis) throws IOException{
+        long fileSize = dis.readLong();
+        if (fileSize != -1){
+            try (FileOutputStream fos = new FileOutputStream("C:\\Users\\79531\\IdeaProjects\\RESTFULL api\\Server\\delete.json")){
+                byte[] buffer = new byte[4096];
+                int bytesRead = dis.read(buffer);
+                fos.write(buffer, 0, bytesRead);
+                System.out.println("File received from client.");
+
+                try{
+                    File file = new File("C:\\Users\\79531\\IdeaProjects\\RESTFULL api\\Server\\delete.json");
+
+                    JsonNode jsonNode = objectMapper.readTree(file);
+
+                    api.DELETE(jsonNode);
 
                 }catch (IOException e){
                     e.printStackTrace();
