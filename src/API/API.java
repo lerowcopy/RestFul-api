@@ -20,13 +20,26 @@ public class API {
         password = "feHTsGVF8d";
     }
 
-    public void PUT(JsonNode jsonNode) {
+    public void POST(JsonNode jsonNode) {
         String sqlQuery = "INSERT INTO myDataBase (name) VALUES (?)";
 
         try (PreparedStatement s = connection.prepareStatement(sqlQuery)){
             s.setString(1, jsonNode.get("name").get("title").asText());
             s.executeUpdate();
             System.out.println("Data inserted into the database.");
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
+
+    public void PUT(JsonNode jsonNode) {
+        String sqlQuery = "UPDATE myDataBase SET name = (?) WHERE id = (?)";
+
+        try (PreparedStatement s = connection.prepareStatement(sqlQuery)){
+            s.setString(1, jsonNode.get("name").asText());
+            s.setInt(2, jsonNode.get("id").asInt());
+            s.executeUpdate();
+            System.out.println("Data updated in the database.");
         }catch (SQLException e){
             e.printStackTrace();
         }

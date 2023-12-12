@@ -34,6 +34,9 @@ public class FirstClient {
                     else if (word.equals("POST")){
                         POSTClient(dos);
                     }
+                    else if (word.equals("PUT")){
+                        PUTClient(dos);
+                    }
                 }
             }finally {
                 clientSocket.close();
@@ -60,6 +63,21 @@ public class FirstClient {
 
     public static void POSTClient(DataOutputStream dos) throws IOException{
         File file = new File("C:\\Users\\79531\\IdeaProjects\\RESTFULL api\\Client\\put.json");
+        dos.writeLong(file.length());
+
+        try (FileInputStream fis = new FileInputStream(file)){
+            byte[] buffer = new byte[4096];
+            int bytesRead;
+
+            while ((bytesRead = fis.read(buffer)) != -1){
+                dos.write(buffer, 0, bytesRead);
+            }
+            System.out.println("File sent to server");
+        }
+    }
+
+    public static void PUTClient(DataOutputStream dos) throws IOException{
+        File file = new File("C:\\Users\\79531\\IdeaProjects\\RESTFULL api\\Client\\post.json");
         dos.writeLong(file.length());
 
         try (FileInputStream fis = new FileInputStream(file)){

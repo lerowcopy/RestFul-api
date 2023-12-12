@@ -70,6 +70,9 @@ class ClientHandler implements Runnable {
 
                     POSTServer(dis);
                 }
+                else if (inputLine.equals("PUT")){
+                    PUTServer(dis);
+                }
 
             }
         } catch (IOException e) {
@@ -115,6 +118,29 @@ class ClientHandler implements Runnable {
 
                 try{
                     File file = new File("C:\\Users\\79531\\IdeaProjects\\RESTFULL api\\Server\\put.json");
+
+                    JsonNode jsonNode = objectMapper.readTree(file);
+
+                    api.POST(jsonNode);
+
+                }catch (IOException e){
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    public void PUTServer (DataInputStream dis) throws IOException{
+        long fileSize = dis.readLong();
+        if (fileSize != -1){
+            try (FileOutputStream fos = new FileOutputStream("C:\\Users\\79531\\IdeaProjects\\RESTFULL api\\Server\\post.json")){
+                byte[] buffer = new byte[4096];
+                int bytesRead = dis.read(buffer);
+                fos.write(buffer, 0, bytesRead);
+                System.out.println("File received from client.");
+
+                try{
+                    File file = new File("C:\\Users\\79531\\IdeaProjects\\RESTFULL api\\Server\\post.json");
 
                     JsonNode jsonNode = objectMapper.readTree(file);
 
