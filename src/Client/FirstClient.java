@@ -41,7 +41,8 @@ public class FirstClient {
     public static void GETClient(DataInputStream dis) throws IOException {
         long fileSize = dis.readLong();
         if (fileSize != -1){
-            try (FileOutputStream fos = new FileOutputStream("C:\\Users\\79531\\IdeaProjects\\RESTFULL api\\Client\\get.json")){
+            String path = System.getProperty("user.dir") + "\\Client\\get.json";
+            try (FileOutputStream fos = new FileOutputStream(path)){
                 byte[] buffer = new byte[4096];
                 int bytesRead = dis.read(buffer);
                 fos.write(buffer, 0, bytesRead);
@@ -54,7 +55,8 @@ public class FirstClient {
     }
 
     public static void POSTClient(DataOutputStream dos) throws IOException{
-        File file = new File("C:\\Users\\79531\\IdeaProjects\\RESTFULL api\\Client\\post.json");
+        String path = System.getProperty("user.dir") + "\\Client\\post.json";
+        File file = new File(path);
         dos.writeLong(file.length());
 
         try (FileInputStream fis = new FileInputStream(file)){
@@ -69,7 +71,8 @@ public class FirstClient {
     }
 
     public static void PUTClient(DataOutputStream dos) throws IOException{
-        File file = new File("C:\\Users\\79531\\IdeaProjects\\RESTFULL api\\Client\\put.json");
+        String path = System.getProperty("user.dir") + "\\Client\\put.json";
+        File file = new File(path);
         dos.writeLong(file.length());
 
         try (FileInputStream fis = new FileInputStream(file)){
@@ -84,7 +87,8 @@ public class FirstClient {
     }
 
     public static void DELETEClient (DataOutputStream dos) throws IOException{
-        File file = new File("C:\\Users\\79531\\IdeaProjects\\RESTFULL api\\Client\\delete.json");
+        String path = System.getProperty("user.dir") + "\\Client\\delete.json";
+        File file = new File(path);
         dos.writeLong(file.length());
 
         try (FileInputStream fis = new FileInputStream(file)){
