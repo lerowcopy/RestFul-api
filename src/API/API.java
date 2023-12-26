@@ -15,8 +15,8 @@ public class API {
     public Boolean connected = false;
 
     public API(){
-        url = "jdbc:mysql://sql11.freesqldatabase.com/sql11668720";
-        username = "sql11668720";
+        url = "jdbc:mysql://db4free.net:3306/testproject_lyc";
+        username = "testproject_lyc";
         password = "feHTsGVF8d";
     }
 
