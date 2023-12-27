@@ -1,4 +1,4 @@
-# RestFull-api
+# RestFul-api
 Проект по информатике к сессии.
 Клиент + сервер api
 запросы PUT + GET + POST + DELETE
